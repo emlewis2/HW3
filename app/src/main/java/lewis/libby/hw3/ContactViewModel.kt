@@ -13,10 +13,10 @@ import kotlinx.coroutines.launch
 sealed interface Screen             //Sealed interface
 object ContactList: Screen          //Screen for all contacts
 object AddressList: Screen          //Screen for all addresses
-data class ContactScreen(           //Screen for individual contact
+data class ContactDisplay(           //Screen for individual contact
     val id: String
 ): Screen
-data class AddressScreen(           //Screen for individual address
+data class AddressDisplay(           //Screen for individual address
     val id: String
 ): Screen
 
@@ -25,10 +25,30 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
     //Private instance of repository
     private val repository: ContactRepository = ContactDatabaseRepository(application)
 
-    var screen by mutableStateOf<Screen>(ContactList)
+    private var screenStack: List<Screen> = listOf(ContactList)
+        set(value) {
+            field = value
+            screen = value.lastOrNull()
+        }
+
+    fun pushScreen(screen: Screen) {
+        screenStack = screenStack + screen
+    }
+
+    fun popScreen() {
+        if (screenStack.isNotEmpty()) {
+            screenStack = screenStack.dropLast(1)
+        }
+    }
+
+    fun setScreenStack(screen: Screen) {
+        screenStack = listOf(screen)
+    }
+
+    var screen by mutableStateOf<Screen?>(ContactList)
         private set
 
-    //Flow properities for all contacts and all addresses
+    //Flow properties for all contacts and all addresses
     val contactsFlow = repository.contactsFlow
     val addressesFlow = repository.addressesFlow
 
@@ -45,9 +65,9 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         repository.getAddress(id)
 
     //Switching screens
-    fun switchTo(screen: Screen) {
-        this.screen = screen
-    }
+//    fun switchTo(screen: Screen) {
+//        this.screen = screen
+//    }
 
     //Reset database
     fun resetDatabase() {

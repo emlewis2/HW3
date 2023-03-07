@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import lewis.libby.hw3.screens.TestScreen
+import lewis.libby.hw3.screens.Ui
 import lewis.libby.hw3.ui.theme.HW3Theme
 
 //Main activity
@@ -21,7 +21,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    TestScreen()
+                    Ui {
+                        finish()
+                    }
                 }
             }
         }
