@@ -14,12 +14,15 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import lewis.libby.hw3.ContactEdit
 import lewis.libby.hw3.ContactList
 //import lewis.libby.hw3.AddressList
 import lewis.libby.hw3.R
@@ -35,14 +38,44 @@ fun ContactScaffold(
     onDeleteSelectedItems: () -> Unit = {},
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
+    onEdit: (() -> Unit)? = null,
+    onAdd: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
         topBar = {
+            val displayName = if (title == "") {
+                "<No Name>"
+            } else {
+                title
+            }
             if (selectedItemCount == 0) {
                 TopAppBar(
-                    title = { SimpleText(text = title) },
+                    title = { SimpleText(text = displayName) },
                     actions = {
+                        // Taken from Movie Ui 2 example project
+                        onEdit?.let { onEdit ->
+                            IconButton(
+                                onClick = onEdit,
+                                modifier = Modifier.padding(8.dp),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Edit,
+                                    contentDescription = stringResource(id = R.string.edit),
+                                )
+                            }
+                        }
+                        onAdd?.let { onAdd ->
+                            IconButton(
+                                onClick = onAdd,
+                                modifier = Modifier.padding(8.dp),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Add,
+                                    contentDescription = stringResource(id = R.string.add_contact),
+                                )
+                            }
+                        }
                         IconButton(
                             onClick = onResetDatabase,
                             modifier = Modifier.padding(8.dp),
@@ -52,6 +85,21 @@ fun ContactScaffold(
                                 contentDescription = stringResource(id = R.string.reset_database)
                             )
                         }
+//                        ScreenSelectButton(
+//                            targetScreen = ContactList,
+//                            imageVector = Icons.Default.PlusOne,
+//                            labelId = R.string.add_contact,
+//                            onSelectListScreen = onSelectListScreen
+//                        )
+//                        IconButton(
+//                            onClick = onAdd(ContactList),
+//                            modifier = Modifier.padding(8.dp),
+//                        ) {
+//                            Icon(
+//                                imageVector = Icons.Default.PlusOne,
+//                                contentDescription = stringResource(id = R.string.add_contact)
+//                            )
+//                        }
                     }
                 )
             } else {
@@ -95,7 +143,7 @@ fun ContactScaffold(
                     onSelectListScreen = onSelectListScreen
                 )
 //                ScreenSelectButton(
-//                    targetScreen = AddressList,
+//                    targetScreen = ContactEdit,
 //                    imageVector = Icons.Default.House,
 //                    labelId = R.string.screen_title_addresses,
 //                    onSelectListScreen = onSelectListScreen

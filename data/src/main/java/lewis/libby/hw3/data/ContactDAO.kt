@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
+import java.util.*
 
 //ContactDAO using Room
 @Dao
@@ -94,5 +95,14 @@ abstract class ContactDAO {
             Address("a6", "Work", "3000 Avengers Drive", "Marvel",
                 "New York", "12201", "c3"),
         )
+    }
+
+    open suspend fun addContact(newId: String) {
+//        val id = UUID.randomUUID().toString()
+        insert(
+            Contact(id = newId, firstName = "", lastName = "",
+            homePhone = "", workPhone = "", mobilePhone = "", email = "")
+        )
+//        return id
     }
 }

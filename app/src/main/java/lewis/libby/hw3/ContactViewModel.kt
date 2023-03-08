@@ -7,8 +7,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import lewis.libby.hw3.repository.ContactDatabaseRepository
+import lewis.libby.hw3.repository.ContactDto
 import lewis.libby.hw3.repository.ContactRepository
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 sealed interface Screen             //Sealed interface
 object ContactList: Screen          //Screen for all contacts
@@ -17,6 +22,9 @@ data class ContactDisplay(           //Screen for individual contact
     val id: String
 ): Screen
 data class AddressDisplay(           //Screen for individual address
+    val id: String
+): Screen
+data class ContactEdit(
     val id: String
 ): Screen
 
@@ -93,10 +101,28 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
 //        this.screen = screen
 //    }
 
+    private var contactUpdateJob: Job? = null
+
+    fun updateContact(contactDto: ContactDto) {
+        contactUpdateJob?.cancel()
+        contactUpdateJob = viewModelScope.launch {
+            delay(500)
+            repository.update(contactDto)
+            contactUpdateJob = null
+        }
+    }
+
     //Reset database
     fun resetDatabase() {
         viewModelScope.launch {
             repository.resetDatabase()
+        }
+    }
+
+    fun addContact(newId: String) {
+//        var newId = UUID.randomUUID().toString()
+        viewModelScope.launch {
+            repository.addContact(newId)
         }
     }
 }

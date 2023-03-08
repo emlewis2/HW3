@@ -19,6 +19,7 @@ import lewis.libby.hw3.Screen
 import lewis.libby.hw3.components.ContactScaffold
 import lewis.libby.hw3.components.SimpleText
 import lewis.libby.hw3.repository.ContactWithAddressesDto
+import java.util.*
 
 //Display screen setup for Contact
 @Composable
@@ -29,7 +30,10 @@ fun ContactDisplay(
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
     onContactClick: (String) -> Unit,
-) {
+    onEdit: (String) -> Unit,
+    onAdd: (String) -> Unit,
+//    onAdd: (() -> Unit)? = null,
+    ) {
     var contactWithAddressesDto by remember { mutableStateOf<ContactWithAddressesDto?>(null) }
 
     //Launching coroutine
@@ -43,6 +47,15 @@ fun ContactDisplay(
         title = contactWithAddressesDto?.contact?.firstName ?: stringResource(id = R.string.loading),
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
+        onEdit =
+        contactWithAddressesDto?.let { contactWithAddresses ->
+            {
+                onEdit(contactWithAddresses.contact.id)
+            }
+        },
+        onAdd = {
+            onAdd(UUID.randomUUID().toString())
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -69,12 +82,21 @@ fun ContactDisplay(
                 }
                 //Display each address for the specific contact
                 contactWithAddresses.addresses.forEach { address ->
-                    SimpleText(
-                        text = "${address.type}: ${address.street}",
-                        modifier = Modifier.clickable {
-                            onContactClick(address.id)
-                            }
-                    )
+                    Row {
+                        SimpleText(text = "${address.type}:")
+                    }
+                    Row {
+                        SimpleText(text = "\t${address.street}")
+                    }
+                    Row {
+                        SimpleText(text = "\t${address.city}, ${address.state} ${address.zip}")
+                    }
+//                    SimpleText(
+//                        text = "${address.type}: ${address.street}",
+//                        modifier = Modifier.clickable {
+//                            onContactClick(address.id)
+//                            }
+//                    )
                 }
             }
         }

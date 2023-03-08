@@ -6,11 +6,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -43,81 +39,104 @@ fun <T> ListScaffold(
     onItemClick: (String) -> Unit,
     itemIcon: ImageVector,
     @StringRes itemIconContentDescriptionId: Int,
+    onAdd: () -> Unit,
     itemContent: @Composable RowScope.(T) -> Unit,
-) = ContactScaffold(
+//    onAdd: () -> Unit,
+) = if (items.isEmpty()) {
+    ContactScaffold(
+        title = stringResource(id = titleId),
+        onSelectListScreen = onSelectListScreen,
+        selectedItemCount = selectedItemIds.size,
+        onResetDatabase = onResetDatabase,
+        onDeleteSelectedItems = onDeleteSelectedItems,
+        onClearSelections = onClearSelections,
+        onAdd = onAdd
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(8.dp)
+        ) {
+            SimpleText(text = "No Contacts Found")
+        }
+    }
+} else {
+    ContactScaffold(
     title = stringResource(id = titleId),
     onSelectListScreen = onSelectListScreen,
     selectedItemCount = selectedItemIds.size,
     onResetDatabase = onResetDatabase,
     onDeleteSelectedItems = onDeleteSelectedItems,
     onClearSelections = onClearSelections,
-) { paddingValues ->
-    LazyColumn(
-        modifier = Modifier
-            .padding(paddingValues)
-            .padding(8.dp)
-    ) {
-        items(
-            items = items,
-            key = { getId(it) },
-        ) { item ->
-            // Taken from Movie Ui 2 example project
-            val id = getId(item)
+    onAdd = onAdd
+    ) { paddingValues ->
+        LazyColumn(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(8.dp)
+        ) {
+            items(
+                items = items,
+                key = { getId(it) },
+            ) { item ->
+                // Taken from Movie Ui 2 example project
+                val id = getId(item)
 
-            val backgroundColor =
-                if (id in selectedItemIds) {
-                    MaterialTheme.colors.primary
-                } else {
-                    MaterialTheme.colors.surface
-                }
+                val backgroundColor =
+                    if (id in selectedItemIds) {
+                        MaterialTheme.colors.primary
+                    } else {
+                        MaterialTheme.colors.surface
+                    }
 
-            val contentColor = MaterialTheme.colors.contentColorFor(backgroundColor)
-            val selectedIds by rememberUpdatedState(newValue = selectedItemIds)
+                val contentColor = MaterialTheme.colors.contentColorFor(backgroundColor)
+                val selectedIds by rememberUpdatedState(newValue = selectedItemIds)
 
-            Card(
-                elevation = 4.dp,
-                backgroundColor = backgroundColor,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-                    .pointerInput(true) {
-                        detectTapGestures(
-//                            onLongPress = {
-//                                onToggleSelection(id)
-//                            },
-                            onTap = {
-                                if (selectedIds.isNotEmpty()) {
-                                    onToggleSelection(id)
-                                } else {
-                                    onItemClick(id)
-                                }
-                            }
-                        )
-                    },
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
+                Card(
+                    elevation = 4.dp,
+                    backgroundColor = backgroundColor,
                     modifier = Modifier
                         .padding(8.dp)
-//                        .clickable { onItemClick(getId(item)) }
-                ) {
-                    Icon(
-                        imageVector = itemIcon,
-//                        tint = MaterialTheme.colors.surface,
-                        tint = backgroundColor,
-                        contentDescription = stringResource(id = itemIconContentDescriptionId),
-                        modifier = Modifier
-                            .size(48.dp)
-                            .background(
-//                                color = MaterialTheme.colors.primary,
-                                color = contentColor,
-                                shape = CircleShape
+                        .fillMaxWidth()
+                        .pointerInput(true) {
+                            detectTapGestures(
+    //                            onLongPress = {
+    //                                onToggleSelection(id)
+    //                            },
+                                onTap = {
+                                    if (selectedIds.isNotEmpty()) {
+                                        onToggleSelection(id)
+                                    } else {
+                                        onItemClick(id)
+                                    }
+                                }
                             )
-                            .clickable {
-                                onToggleSelection(id)
-                            }
-                    )
-                    itemContent(item)
+                        },
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(8.dp)
+    //                        .clickable { onItemClick(getId(item)) }
+                    ) {
+                        Icon(
+                            imageVector = itemIcon,
+    //                        tint = MaterialTheme.colors.surface,
+                            tint = backgroundColor,
+                            contentDescription = stringResource(id = itemIconContentDescriptionId),
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(
+    //                                color = MaterialTheme.colors.primary,
+                                    color = contentColor,
+                                    shape = CircleShape
+                                )
+                                .clickable {
+                                    onToggleSelection(id)
+                                }
+                        )
+                        itemContent(item)
+                    }
                 }
             }
         }

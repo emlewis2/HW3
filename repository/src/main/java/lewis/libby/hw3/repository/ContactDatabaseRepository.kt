@@ -49,4 +49,6 @@ class ContactDatabaseRepository(context: Context): ContactRepository {
 
     //Reset database
     override suspend fun resetDatabase() = dao.resetDatabase()
+
+    override suspend fun addContact(newId: String) = dao.addContact(newId)
 }

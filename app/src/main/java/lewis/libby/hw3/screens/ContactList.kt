@@ -28,6 +28,7 @@ fun ContactList(
     onToggleSelection: (String) -> Unit,
     onDeleteSelectedItems: () -> Unit,
     onContactClick: (String) -> Unit,
+    onAdd: () -> Unit,
 //    comparator: Comparator<ContactDto>,
 ) = ListScaffold(
     titleId = R.string.screen_title_contacts,
@@ -41,7 +42,8 @@ fun ContactList(
     selectedItemIds = selectedItemIds,
     onClearSelections = onClearSelections,
     onToggleSelection = onToggleSelection,
-    onDeleteSelectedItems = onDeleteSelectedItems
+    onDeleteSelectedItems = onDeleteSelectedItems,
+    onAdd = onAdd
 ) { contact ->
     SimpleText(text = "${contact.lastName}, ${contact.firstName}\n${contact.mobilePhone}")
 }
