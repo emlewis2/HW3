@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import lewis.libby.hw3.ContactList
-import lewis.libby.hw3.AddressList
+//import lewis.libby.hw3.AddressList
 import lewis.libby.hw3.R
 import lewis.libby.hw3.Screen
 
@@ -42,7 +42,7 @@ fun ContactScaffold(
                         modifier = Modifier.padding(8.dp),
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Refresh,
+                            imageVector = Icons.Default.Autorenew,
                             contentDescription = stringResource(id = R.string.reset_database)
                         )
                     }
@@ -60,12 +60,12 @@ fun ContactScaffold(
                     labelId = R.string.screen_title_contacts,
                     onSelectListScreen = onSelectListScreen
                 )
-                ScreenSelectButton(
-                    targetScreen = AddressList,
-                    imageVector = Icons.Default.House,
-                    labelId = R.string.screen_title_addresses,
-                    onSelectListScreen = onSelectListScreen
-                )
+//                ScreenSelectButton(
+//                    targetScreen = AddressList,
+//                    imageVector = Icons.Default.House,
+//                    labelId = R.string.screen_title_addresses,
+//                    onSelectListScreen = onSelectListScreen
+//                )
             }
         }
     )

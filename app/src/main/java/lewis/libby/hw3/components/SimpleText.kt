@@ -1,6 +1,6 @@
 package lewis.libby.hw3.components
 
-import androidx.compose.foundation.clickable
+//import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,15 +12,16 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun SimpleText(
     text: String,
-    onClick: () -> Unit = {},
+//    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier
 ) =
     Text(
         text = text,
-        maxLines = 1,
-        overflow = TextOverflow.Ellipsis,
-        modifier = Modifier
+//        maxLines = 1,
+//        overflow = TextOverflow.Ellipsis,
+        modifier = modifier
             .padding(8.dp)
-            .clickable {
-                onClick()
-            }
+//            .clickable {
+//                onClick()
+//            }
     )

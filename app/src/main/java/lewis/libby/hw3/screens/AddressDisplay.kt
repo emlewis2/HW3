@@ -1,7 +1,10 @@
 package lewis.libby.hw3.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,7 +43,11 @@ fun AddressDisplay(
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+        ) {
             addressDto?.let { address ->
                 Row {
                     SimpleText(text = "Type: ${address.type}")

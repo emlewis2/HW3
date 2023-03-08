@@ -1,7 +1,10 @@
 package lewis.libby.hw3.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,7 +44,11 @@ fun ContactDisplay(
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
     ) { paddingValues ->
-        Column(modifier = Modifier.padding(paddingValues)) {
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
+        ) {
             contactWithAddressesDto?.let { contactWithAddresses ->
                 Row {
                     SimpleText(text = "Name: ${contactWithAddresses.contact.firstName} " +
@@ -62,12 +69,14 @@ fun ContactDisplay(
                 }
                 //Display each address for the specific contact
                 contactWithAddresses.addresses.forEach { address ->
-                    SimpleText(text = "${address.type}: ${address.street}") {
-                        onContactClick(address.id)
-                    }
+                    SimpleText(
+                        text = "${address.type}: ${address.street}",
+                        modifier = Modifier.clickable {
+                            onContactClick(address.id)
+                            }
+                    )
                 }
             }
         }
     }
-
 }

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 sealed interface Screen             //Sealed interface
 object ContactList: Screen          //Screen for all contacts
-object AddressList: Screen          //Screen for all addresses
+//object AddressList: Screen          //Screen for all addresses
 data class ContactDisplay(           //Screen for individual contact
     val id: String
 ): Screen

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import lewis.libby.hw3.AddressList
+//import lewis.libby.hw3.AddressList
 import lewis.libby.hw3.AddressDisplay
 import lewis.libby.hw3.ContactList
 import lewis.libby.hw3.ContactDisplay
@@ -34,14 +34,14 @@ fun Ui(
                 viewModel.pushScreen(ContactDisplay(id))
             }
         )
-        AddressList -> AddressList(
-            addresses = addresses,
-            onSelectListScreen = viewModel::setScreenStack,
-            onResetDatabase = viewModel::resetDatabase,
-            onAddressClick = { id ->
-                viewModel.pushScreen(AddressDisplay(id))
-            }
-        )
+//        AddressList -> AddressList(
+//            addresses = addresses,
+//            onSelectListScreen = viewModel::setScreenStack,
+//            onResetDatabase = viewModel::resetDatabase,
+//            onAddressClick = { id ->
+//                viewModel.pushScreen(AddressDisplay(id))
+//            }
+//        )
 
         is ContactDisplay -> ContactDisplay(
             contactId = screen.id,
