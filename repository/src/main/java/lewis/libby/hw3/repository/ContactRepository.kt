@@ -22,5 +22,7 @@ interface ContactRepository {
     suspend fun delete(address: AddressDto)
     suspend fun delete(contact: ContactDto)
 
+    suspend fun deleteContactsById(ids: Set<String>)
+
     suspend fun resetDatabase()
 }

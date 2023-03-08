@@ -23,6 +23,10 @@ fun ContactList(
     contacts: List<ContactDto>,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
+    selectedItemIds: Set<String>,
+    onClearSelections: () -> Unit,
+    onToggleSelection: (String) -> Unit,
+    onDeleteSelectedItems: () -> Unit,
     onContactClick: (String) -> Unit,
 //    comparator: Comparator<ContactDto>,
 ) = ListScaffold(
@@ -34,6 +38,10 @@ fun ContactList(
     onItemClick = onContactClick,
     itemIcon = Icons.Default.Person,
     itemIconContentDescriptionId = R.string.tap_to_toggle_selection,
+    selectedItemIds = selectedItemIds,
+    onClearSelections = onClearSelections,
+    onToggleSelection = onToggleSelection,
+    onDeleteSelectedItems = onDeleteSelectedItems
 ) { contact ->
     SimpleText(text = "${contact.lastName}, ${contact.firstName}\n${contact.mobilePhone}")
 }

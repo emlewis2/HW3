@@ -52,6 +52,9 @@ abstract class ContactDAO {
     @Delete
     abstract suspend fun delete(vararg addresses: Address)
 
+    @Query("DELETE FROM Contact WHERE id IN (:ids)")
+    abstract suspend fun deleteContactsById(ids: Set<String>)
+
     //Clear functions
     @Query("DELETE FROM Address")
     abstract suspend fun clearAddresses()

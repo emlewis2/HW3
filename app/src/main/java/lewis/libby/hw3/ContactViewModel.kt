@@ -29,7 +29,31 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         set(value) {
             field = value
             screen = value.lastOrNull()
+            clearSelections()
         }
+
+    //Next section on selection taken from Movie Ui 2 example project
+
+    var selectedItemIds by mutableStateOf<Set<String>>(emptySet())
+        private set
+
+    fun clearSelections() {
+        selectedItemIds = emptySet()
+    }
+    fun toggleSelection(id: String) {
+        selectedItemIds =
+            if (id in selectedItemIds) {
+                selectedItemIds - id
+            } else {
+                selectedItemIds + id
+            }
+    }
+    fun deleteSelectedContacts() {
+        viewModelScope.launch {
+            repository.deleteContactsById(selectedItemIds)
+            clearSelections()
+        }
+    }
 
     fun pushScreen(screen: Screen) {
         screenStack = screenStack + screen

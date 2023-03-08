@@ -12,6 +12,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,26 +30,58 @@ import lewis.libby.hw3.Screen
 @Composable
 fun ContactScaffold(
     title: String,
+    selectedItemCount: Int = 0,
+    onClearSelections: () -> Unit = {},
+    onDeleteSelectedItems: () -> Unit = {},
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { SimpleText(text = title) },
-                actions = {
-                    IconButton(
-                        onClick = onResetDatabase,
-                        modifier = Modifier.padding(8.dp),
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Autorenew,
-                            contentDescription = stringResource(id = R.string.reset_database)
-                        )
+            if (selectedItemCount == 0) {
+                TopAppBar(
+                    title = { SimpleText(text = title) },
+                    actions = {
+                        IconButton(
+                            onClick = onResetDatabase,
+                            modifier = Modifier.padding(8.dp),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Autorenew,
+                                contentDescription = stringResource(id = R.string.reset_database)
+                            )
+                        }
                     }
-                }
-            )
+                )
+            } else {
+                // Taken from Movie Ui 2 example project
+                TopAppBar(
+                    navigationIcon = {
+                        IconButton(
+                            onClick = onClearSelections,
+                            modifier = Modifier.padding(8.dp),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = stringResource(id = R.string.clear_selections),
+                            )
+                        }
+                    },
+                    title = { SimpleText(text = selectedItemCount.toString()) },
+                    actions = {
+                        IconButton(
+                            onClick = onDeleteSelectedItems,
+                            modifier = Modifier.padding(8.dp),
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = stringResource(id = R.string.delete_selected_items)
+                            )
+                        }
+                    }
+                )
+            }
         },
         content = { paddingValues ->
             content(paddingValues)

@@ -32,7 +32,11 @@ fun Ui(
             onResetDatabase = viewModel::resetDatabase,
             onContactClick = { id ->
                 viewModel.pushScreen(ContactDisplay(id))
-            }
+            },
+            selectedItemIds = viewModel.selectedItemIds,
+            onClearSelections = viewModel::clearSelections,
+            onToggleSelection = viewModel::toggleSelection,
+            onDeleteSelectedItems = viewModel::deleteSelectedContacts,
         )
 //        AddressList -> AddressList(
 //            addresses = addresses,

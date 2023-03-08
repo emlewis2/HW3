@@ -45,6 +45,8 @@ class ContactDatabaseRepository(context: Context): ContactRepository {
     override suspend fun delete(address: AddressDto) = dao.delete(address.toEntity())
     override suspend fun delete(contact: ContactDto) = dao.delete(contact.toEntity())
 
+    override suspend fun deleteContactsById(ids: Set<String>) = dao.deleteContactsById(ids)
+
     //Reset database
     override suspend fun resetDatabase() = dao.resetDatabase()
 }
