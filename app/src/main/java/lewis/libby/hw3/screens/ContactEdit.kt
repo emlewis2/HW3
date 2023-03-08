@@ -5,6 +5,8 @@ package lewis.libby.hw3.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,11 +45,11 @@ fun ContactEdit(
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
         ) {
             TextEntry(
                 labelId = R.string.first_name,
-                placeholderId = R.string.contact_first_name_placeholder,
+                placeholderId = R.string.first_name_placeholder,
                 value = contact?.firstName ?: "",
                 onValueChange = {
                     contact = contact?.copy(firstName = it)?.apply {
@@ -55,16 +57,56 @@ fun ContactEdit(
                     }
                 },
             )
-//            TextEntry(
-//                labelId = R.string.description,
-//                placeholderId = R.string.movie_description_placeholder,
-//                value = movie?.description ?: "",
-//                onValueChange = {
-//                    movie = movie?.copy(description = it)?.apply {
-//                        onMovieUpdate(this)
-//                    }
-//                },
-//            )
+            TextEntry(
+                labelId = R.string.last_name,
+                placeholderId = R.string.last_name_placeholder,
+                value = contact?.lastName ?: "",
+                onValueChange = {
+                    contact = contact?.copy(lastName = it)?.apply {
+                        onContactUpdate(this)
+                    }
+                },
+            )
+            TextEntry(
+                labelId = R.string.home_phone,
+                placeholderId = R.string.home_phone_placeholder,
+                value = contact?.homePhone ?: "",
+                onValueChange = {
+                    contact = contact?.copy(homePhone = it)?.apply {
+                        onContactUpdate(this)
+                    }
+                },
+            )
+            TextEntry(
+                labelId = R.string.work_phone,
+                placeholderId = R.string.work_phone_placeholder,
+                value = contact?.workPhone ?: "",
+                onValueChange = {
+                    contact = contact?.copy(workPhone = it)?.apply {
+                        onContactUpdate(this)
+                    }
+                },
+            )
+            TextEntry(
+                labelId = R.string.mobile_phone,
+                placeholderId = R.string.mobile_phone_placeholder,
+                value = contact?.mobilePhone ?: "",
+                onValueChange = {
+                    contact = contact?.copy(mobilePhone = it)?.apply {
+                        onContactUpdate(this)
+                    }
+                },
+            )
+            TextEntry(
+                labelId = R.string.email,
+                placeholderId = R.string.email_placeholder,
+                value = contact?.email ?: "",
+                onValueChange = {
+                    contact = contact?.copy(email = it)?.apply {
+                        onContactUpdate(this)
+                    }
+                },
+            )
         }
     }
 }

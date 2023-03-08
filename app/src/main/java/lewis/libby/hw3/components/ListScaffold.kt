@@ -24,6 +24,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import lewis.libby.hw3.Screen
+import lewis.libby.hw3.R
 
 @Composable
 fun <T> ListScaffold(
@@ -57,7 +58,7 @@ fun <T> ListScaffold(
                 .padding(paddingValues)
                 .padding(8.dp)
         ) {
-            SimpleText(text = "No Contacts Found")
+            SimpleText(text = stringResource(id = R.string.no_contacts_found))
         }
     }
 } else {
@@ -100,9 +101,9 @@ fun <T> ListScaffold(
                         .fillMaxWidth()
                         .pointerInput(true) {
                             detectTapGestures(
-    //                            onLongPress = {
-    //                                onToggleSelection(id)
-    //                            },
+                                //                            onLongPress = {
+                                //                                onToggleSelection(id)
+                                //                            },
                                 onTap = {
                                     if (selectedIds.isNotEmpty()) {
                                         onToggleSelection(id)
@@ -127,7 +128,7 @@ fun <T> ListScaffold(
                             modifier = Modifier
                                 .size(48.dp)
                                 .background(
-    //                                color = MaterialTheme.colors.primary,
+                                    //                                color = MaterialTheme.colors.primary,
                                     color = contentColor,
                                     shape = CircleShape
                                 )
