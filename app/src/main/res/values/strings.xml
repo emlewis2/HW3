@@ -11,6 +11,8 @@
     <string name="clear_selections">Clear selections</string>
     <string name="delete_selected_items">Delete selected items</string>
     <string name="add_contact">Add contact</string>
+    <string name="delete_address">Delete address</string>
+    <string name="add_address">Add address</string>
 
     <string name="first_name">First Name</string>
     <string name="first_name_placeholder">Enter the first name</string>
@@ -29,6 +31,21 @@
 
     <string name="email">Email</string>
     <string name="email_placeholder">Enter the email</string>
+
+    <string name="type">Type</string>
+    <string name="type_placeholder">Enter the type</string>
+
+    <string name="street">Street</string>
+    <string name="street_placeholder">Enter the street</string>
+
+    <string name="city">Street</string>
+    <string name="city_placeholder">Enter the street</string>
+
+    <string name="state">Street</string>
+    <string name="state_placeholder">Enter the street</string>
+
+    <string name="zip">Street</string>
+    <string name="zip_placeholder">Enter the street</string>
 
     <string name="loading">Loading</string>
 </resources>

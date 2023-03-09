@@ -27,4 +27,8 @@ interface ContactRepository {
     suspend fun resetDatabase()
 
     suspend fun addContact(newId: String)
+
+    suspend fun deleteAddressById(id: String)
+
+    suspend fun addAddress(contactId: String, newAddressId: String)
 }

@@ -7,12 +7,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.coroutineScope
+import lewis.libby.hw3.*
+import lewis.libby.hw3.screens.AddressEdit
 //import lewis.libby.hw3.AddressList
-import lewis.libby.hw3.AddressDisplay
-import lewis.libby.hw3.ContactEdit
-import lewis.libby.hw3.ContactList
-import lewis.libby.hw3.ContactDisplay
-import lewis.libby.hw3.ContactViewModel
 import java.util.*
 
 @Composable
@@ -86,9 +83,17 @@ fun Ui(
         is ContactEdit -> ContactEdit(
             contactId = screen.id,
             fetchContact = viewModel::getContact,
+            fetchContactWithAddresses = viewModel::getContactWithAddresses,
             onSelectListScreen = viewModel::setScreenStack,
             onResetDatabase = viewModel::resetDatabase,
+            onAddressClick = { id -> viewModel.pushScreen(AddressEdit(id)) },
             onContactUpdate = viewModel::updateContact,
+//            onDeleteAddress = viewModel::deleteAddress,
+            onAddAddress = {
+                val newAddressId = UUID.randomUUID().toString()
+                viewModel.addAddress(screen.id, newAddressId)
+                viewModel.pushScreen(AddressEdit(newAddressId))
+            }
         )
         is AddressDisplay -> AddressDisplay(
             addressId = screen.id,
@@ -98,6 +103,13 @@ fun Ui(
 //            onAddressClick = { id ->
 //                viewModel.pushScreen(AddressDisplay(id))
 //            }
+        )
+        is AddressEdit -> AddressEdit(
+            addressId = screen.id,
+            fetchAddress = viewModel::getAddress,
+            onSelectListScreen = viewModel::setScreenStack,
+            onResetDatabase = viewModel::resetDatabase,
+            onAddressUpdate = viewModel::updateAddress
         )
     }
 }

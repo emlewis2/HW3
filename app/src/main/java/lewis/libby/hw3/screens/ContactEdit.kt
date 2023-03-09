@@ -2,33 +2,50 @@ package lewis.libby.hw3.screens
 
 // Entire code taken and adapted from Movie Ui 2 example project
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import lewis.libby.hw3.R
 import lewis.libby.hw3.Screen
 import lewis.libby.hw3.components.ContactScaffold
 import lewis.libby.hw3.components.TextEntry
 import lewis.libby.hw3.repository.ContactDto
 import lewis.libby.hw3.repository.ContactRepository
+import lewis.libby.hw3.components.SimpleText
+import lewis.libby.hw3.repository.ContactWithAddressesDto
 
 @Composable
 fun ContactEdit(
     contactId: String,
     fetchContact: suspend (String) -> ContactDto,
+    fetchContactWithAddresses: suspend (String) -> ContactWithAddressesDto,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
     onContactUpdate: (ContactDto) -> Unit,
+    onAddressClick: (String) -> Unit,
+//    onDeleteAddress: (String) -> Unit,
+    onAddAddress: () -> Unit,
 ) {
     var contact by remember { mutableStateOf<ContactDto?>(null) }
 
@@ -37,10 +54,20 @@ fun ContactEdit(
         contact = fetchContact(contactId)
     }
 
+    var contactWithAddressesDto by remember { mutableStateOf<ContactWithAddressesDto?>(null) }
+
+    LaunchedEffect(key1 = contactId) {
+        // starts a coroutine to fetch the rating
+        contactWithAddressesDto = fetchContactWithAddresses(contactId)
+    }
+
     ContactScaffold(
         title = contact?.firstName ?: stringResource(id = R.string.loading),
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
+        onAddAddress = onAddAddress,
+//        onAddressClick = onAddressClick
+//        onDeleteAddress = onDeleteAddress(addressId),
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -107,6 +134,86 @@ fun ContactEdit(
                     }
                 },
             )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+//                        .padding(8.dp)
+                    .fillMaxWidth()
+                //                        .clickable { onItemClick(getId(item)) }
+            ) {
+                SimpleText(
+                    text = "Addresses",
+                    modifier = Modifier.weight(1f)
+                )
+                IconButton(
+                    onClick = onAddAddress,
+                    modifier = Modifier
+                        .size(48.dp)
+//                            .fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        tint = Color.Green,
+                        contentDescription = stringResource(id = R.string.add_address),
+                    )
+                }
+            }
+            contactWithAddressesDto?.addresses?.forEach { address ->
+                Card(
+                    elevation = 4.dp,
+                    backgroundColor = MaterialTheme.colors.surface,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .pointerInput(true) {
+                            detectTapGestures(
+                                onTap = { onAddressClick(address.id) }
+                            )
+                        }
+                ) {
+                    Column(
+                        modifier = Modifier
+//                            .padding(paddingValues)
+//                            .verticalScroll(rememberScrollState())
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+//                                .padding(8.dp)
+                        ) {
+                            SimpleText(
+                                text = address.type,
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(
+                                onClick = onAddAddress, // FIX FUNCTIONALITY
+                                modifier = Modifier
+                                    .size(48.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    tint = Color.Red,
+                                    contentDescription = stringResource(id = R.string.delete_address),
+                                )
+                            }
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+//                                .padding(8.dp)
+                        ) {
+                            SimpleText(text = address.street)
+                        }
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+//                                .padding(8.dp)
+                        ) {
+                            SimpleText(text = "${address.city} ${address.state} ${address.zip}")
+                        }
+                    }
+                }
+            }
         }
     }
 }

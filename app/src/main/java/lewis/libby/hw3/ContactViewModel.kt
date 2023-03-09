@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import lewis.libby.hw3.repository.ContactDatabaseRepository
 import lewis.libby.hw3.repository.ContactDto
+import lewis.libby.hw3.repository.AddressDto
 import lewis.libby.hw3.repository.ContactRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
@@ -25,6 +26,9 @@ data class AddressDisplay(           //Screen for individual address
     val id: String
 ): Screen
 data class ContactEdit(
+    val id: String
+): Screen
+data class AddressEdit(
     val id: String
 ): Screen
 
@@ -123,6 +127,28 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
 //        var newId = UUID.randomUUID().toString()
         viewModelScope.launch {
             repository.addContact(newId)
+        }
+    }
+
+    fun deleteAddress(addressId: String) {
+        viewModelScope.launch {
+            repository.deleteAddressById(addressId)
+        }
+    }
+
+    fun addAddress(contactId: String, newAddressId: String) {
+        viewModelScope.launch {
+            repository.addAddress(contactId, newAddressId)
+        }
+    }
+
+    private var addressUpdateJob: Job? = null
+    fun updateAddress(addressDto: AddressDto) {
+        addressUpdateJob?.cancel()
+        addressUpdateJob = viewModelScope.launch {
+            delay(500)
+            repository.update(addressDto)
+            addressUpdateJob = null
         }
     }
 }

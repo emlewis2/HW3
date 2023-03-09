@@ -51,4 +51,9 @@ class ContactDatabaseRepository(context: Context): ContactRepository {
     override suspend fun resetDatabase() = dao.resetDatabase()
 
     override suspend fun addContact(newId: String) = dao.addContact(newId)
+
+    override suspend fun deleteAddressById(id: String) = dao.deleteAddressById(id)
+
+    override suspend fun addAddress(contactId: String, newAddressId: String) =
+        dao.addAddress(contactId, newAddressId)
 }

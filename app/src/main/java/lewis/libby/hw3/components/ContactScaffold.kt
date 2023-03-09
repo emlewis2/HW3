@@ -40,6 +40,8 @@ fun ContactScaffold(
     onResetDatabase: () -> Unit,
     onEdit: (() -> Unit)? = null,
     onAdd: (() -> Unit)? = null,
+    onDeleteAddress: () -> Unit = {},
+    onAddAddress: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     Scaffold(

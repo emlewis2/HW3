@@ -105,4 +105,14 @@ abstract class ContactDAO {
         )
 //        return id
     }
+
+    @Query("DELETE FROM Address WHERE id = :id")
+    abstract suspend fun deleteAddressById(id: String)
+
+    open suspend fun addAddress(contactId: String, newAddressId: String) {
+        insert(
+            Address(id = newAddressId, type = "", street = "", city = "", state = "", zip = "",
+            contactId = contactId)
+        )
+    }
 }
