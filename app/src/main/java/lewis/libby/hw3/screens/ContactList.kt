@@ -23,10 +23,10 @@ fun ContactList(
     onContactClick: (String) -> Unit,
     onAbout: () -> Unit,
     onAdd: () -> Unit,
-//    comparator: Comparator<ContactDto>,
+    comparator: Comparator<ContactDto>,
 ) = ListScaffold(
     titleId = R.string.screen_title_contacts,
-    items = contacts,
+    items = contacts.sortedWith(comparator),
     getId = { it.id },
     onSelectListScreen = onSelectListScreen,
     onResetDatabase = onResetDatabase,

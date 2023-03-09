@@ -40,6 +40,7 @@ fun Ui(
                 viewModel.addContact(newId)
                 viewModel.pushScreen(ContactEdit(newId))
             },
+            comparator = viewModel.comparator,
         )
         is ContactDisplay -> ContactDisplay(
             contactId = screen.id,

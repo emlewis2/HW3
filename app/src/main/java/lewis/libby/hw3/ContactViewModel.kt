@@ -47,6 +47,17 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
     var addresses by mutableStateOf<List<AddressDto>?>(emptyList())
         private set
 
+    class ContactComparator: Comparator<ContactDto> {
+        override fun compare(c1: ContactDto?, c2: ContactDto?): Int {
+            if (c1?.lastName == null || c2?.lastName == null) {
+                return 0
+            }
+            return c1.lastName.compareTo(c2.lastName)
+        }
+    }
+
+    val comparator = ContactComparator()
+
     fun settingAddresses(addressList: List<AddressDto>?) {
         addresses = addressList
     }
