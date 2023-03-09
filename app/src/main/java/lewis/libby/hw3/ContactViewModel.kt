@@ -11,10 +11,8 @@ import lewis.libby.hw3.repository.ContactDto
 import lewis.libby.hw3.repository.AddressDto
 import lewis.libby.hw3.repository.ContactRepository
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.*
 
 sealed interface Screen             //Sealed interface
 object ContactList: Screen          //Screen for all contacts
@@ -22,9 +20,6 @@ object About: Screen          //Screen for about page
 data class ContactDisplay(           //Screen for individual contact
     val id: String
 ): Screen
-//data class AddressDisplay(           //Screen for individual address
-//    val id: String
-//): Screen
 data class ContactEdit(
     val id: String
 ): Screen
@@ -60,9 +55,6 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         selectedItemIds = emptySet()
     }
 
-//    fun clearAddress() {
-//        deletedAddress = emptySet()
-//    }
     fun toggleSelection(id: String) {
         selectedItemIds =
             if (id in selectedItemIds) {
@@ -111,11 +103,6 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
     suspend fun getAddress(id: String) =
         repository.getAddress(id)
 
-    //Switching screens
-//    fun switchTo(screen: Screen) {
-//        this.screen = screen
-//    }
-
     private var contactUpdateJob: Job? = null
 
     fun updateContact(contactDto: ContactDto) {
@@ -141,16 +128,10 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteAddress(contactId: String, addressId: String) {
+    fun deleteAddress(addressId: String) {
         viewModelScope.launch {
             repository.deleteAddressById(addressId)
-//            delay(5000)
-//            pushScreen(ContactEdit(contactId))
-//            popScreen()
-//            clearAddress()
-//            addresses - addressId
         }
-//        pushScreen(ContactEdit(contactId))
     }
 
     fun addAddress(contactId: String, newAddressId: String) {

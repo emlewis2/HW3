@@ -2,19 +2,14 @@ package lewis.libby.hw3.screens
 
 // Entire code taken and adapted from Movie Ui 2 example project
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,7 +27,6 @@ import lewis.libby.hw3.Screen
 import lewis.libby.hw3.components.ContactScaffold
 import lewis.libby.hw3.components.TextEntry
 import lewis.libby.hw3.repository.ContactDto
-import lewis.libby.hw3.repository.ContactRepository
 import lewis.libby.hw3.components.SimpleText
 import lewis.libby.hw3.repository.AddressDto
 import lewis.libby.hw3.repository.ContactWithAddressesDto
@@ -44,16 +38,13 @@ fun ContactEdit(
     addresses: List<AddressDto>?,
     setAddresses: (List<AddressDto>?) -> Unit,
     fetchContactWithAddresses: suspend (String) -> ContactWithAddressesDto,
-//    fetchAddresses: suspend (String) -> Set<AddressDto>,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
     onContactUpdate: (ContactDto) -> Unit,
     onAddressClick: (String) -> Unit,
-    onDeleteAddress: (String, String) -> Unit,
+    onDeleteAddress: (String) -> Unit,
     onAddAddress: () -> Unit,
     onAbout: () -> Unit,
-//    addresses: List<AddressDto>
-//    deletedAddress: Set<String>
 ) {
     var contact by remember { mutableStateOf<ContactDto?>(null) }
 
@@ -83,8 +74,6 @@ fun ContactEdit(
         onResetDatabase = onResetDatabase,
         onAddAddress = onAddAddress,
         onAbout = onAbout,
-//        onAddressClick = onAddressClick
-//        onDeleteAddress = onDeleteAddress(),
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -154,9 +143,7 @@ fun ContactEdit(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-//                        .padding(8.dp)
                     .fillMaxWidth()
-                //                        .clickable { onItemClick(getId(item)) }
             ) {
                 SimpleText(
                     text = stringResource(id = R.string.section_title_addresses),
@@ -190,13 +177,10 @@ fun ContactEdit(
                 ) {
                     Column(
                         modifier = Modifier
-//                            .padding(paddingValues)
-//                            .verticalScroll(rememberScrollState())
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-//                                .padding(8.dp)
                         ) {
                             SimpleText(
                                 text = address.type,
@@ -204,8 +188,7 @@ fun ContactEdit(
                             )
                             IconButton(
                                 onClick = {
-//                                    deletedAddress.plus(address.id)
-                                    onDeleteAddress(contactId, address.id)
+                                    onDeleteAddress(address.id)
                                     addressList?.minus(address)
                                     setAddresses(addressList)
                                           }, // FIX FUNCTIONALITY
@@ -222,14 +205,12 @@ fun ContactEdit(
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-//                                .padding(8.dp)
                         ) {
                             SimpleText(text = address.street)
                         }
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-//                                .padding(8.dp)
                         ) {
                             SimpleText(text = "${address.city} ${address.state} ${address.zip}")
                         }

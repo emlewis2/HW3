@@ -22,9 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import lewis.libby.hw3.ContactEdit
 import lewis.libby.hw3.ContactList
-//import lewis.libby.hw3.AddressList
 import lewis.libby.hw3.R
 import lewis.libby.hw3.Screen
 
@@ -101,21 +99,6 @@ fun ContactScaffold(
                                 )
                             }
                         }
-//                        ScreenSelectButton(
-//                            targetScreen = ContactList,
-//                            imageVector = Icons.Default.PlusOne,
-//                            labelId = R.string.add_contact,
-//                            onSelectListScreen = onSelectListScreen
-//                        )
-//                        IconButton(
-//                            onClick = onAdd(ContactList),
-//                            modifier = Modifier.padding(8.dp),
-//                        ) {
-//                            Icon(
-//                                imageVector = Icons.Default.PlusOne,
-//                                contentDescription = stringResource(id = R.string.add_contact)
-//                            )
-//                        }
                     }
                 )
             } else {
@@ -158,12 +141,6 @@ fun ContactScaffold(
                     labelId = R.string.screen_title_contacts,
                     onSelectListScreen = onSelectListScreen
                 )
-//                ScreenSelectButton(
-//                    targetScreen = ContactEdit,
-//                    imageVector = Icons.Default.House,
-//                    labelId = R.string.screen_title_addresses,
-//                    onSelectListScreen = onSelectListScreen
-//                )
             }
         }
     )

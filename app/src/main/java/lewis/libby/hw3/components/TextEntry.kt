@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import lewis.libby.hw3.R
 
 @Composable
 fun TextEntry(
@@ -30,7 +31,7 @@ fun TextEntry(
             Text(
                 text =
                 if (value == null) {
-                    "loading..."
+                    stringResource(id = R.string.loading)
                 } else {
                     stringResource(id = placeholderId)
                 }

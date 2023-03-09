@@ -43,7 +43,6 @@ fun <T> ListScaffold(
     @StringRes itemIconContentDescriptionId: Int,
     onAdd: () -> Unit,
     itemContent: @Composable RowScope.(T) -> Unit,
-//    onAdd: () -> Unit,
 ) = if (items.isEmpty()) {
     ContactScaffold(
         title = stringResource(id = titleId),
@@ -104,9 +103,6 @@ fun <T> ListScaffold(
                         .fillMaxWidth()
                         .pointerInput(true) {
                             detectTapGestures(
-                                //                            onLongPress = {
-                                //                                onToggleSelection(id)
-                                //                            },
                                 onTap = {
                                     if (selectedIds.isNotEmpty()) {
                                         onToggleSelection(id)
@@ -121,17 +117,14 @@ fun <T> ListScaffold(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .padding(8.dp)
-    //                        .clickable { onItemClick(getId(item)) }
                     ) {
                         Icon(
                             imageVector = itemIcon,
-    //                        tint = MaterialTheme.colors.surface,
                             tint = backgroundColor,
                             contentDescription = stringResource(id = itemIconContentDescriptionId),
                             modifier = Modifier
                                 .size(48.dp)
                                 .background(
-                                    //                                color = MaterialTheme.colors.primary,
                                     color = contentColor,
                                     shape = CircleShape
                                 )

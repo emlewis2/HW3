@@ -1,6 +1,5 @@
 package lewis.libby.hw3.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -29,11 +28,9 @@ fun ContactDisplay(
     fetchContactWithAddresses: suspend (String) -> ContactWithAddressesDto,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
-//    onContactClick: (String) -> Unit,
     onEdit: (String) -> Unit,
     onAdd: (String) -> Unit,
     onAbout: () -> Unit,
-//    onAdd: (() -> Unit)? = null,
     ) {
     var contactWithAddressesDto by remember { mutableStateOf<ContactWithAddressesDto?>(null) }
 
@@ -43,7 +40,6 @@ fun ContactDisplay(
     }
 
     //Display all info for an individual contact from the ContactDto
-//    SimpleText(text = "Contact")
     ContactScaffold(
         title = contactWithAddressesDto?.contact?.firstName ?: stringResource(id = R.string.loading),
         onSelectListScreen = onSelectListScreen,
@@ -102,12 +98,6 @@ fun ContactDisplay(
                     Row {
                         SimpleText(text = "\t${address.city}, ${address.state} ${address.zip}")
                     }
-//                    SimpleText(
-//                        text = "${address.type}: ${address.street}",
-//                        modifier = Modifier.clickable {
-//                            onContactClick(address.id)
-//                            }
-//                    )
                 }
             }
         }
