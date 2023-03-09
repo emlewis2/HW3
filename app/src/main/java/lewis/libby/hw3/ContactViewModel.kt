@@ -1,5 +1,7 @@
 package lewis.libby.hw3
 
+// Entire code was taken and adapted from the Movie Ui example project
+
 import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

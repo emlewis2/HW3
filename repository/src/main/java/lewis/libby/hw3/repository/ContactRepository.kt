@@ -1,5 +1,7 @@
 package lewis.libby.hw3.repository
 
+// Entire code was taken and adapted from the Movie example project
+
 import kotlinx.coroutines.flow.Flow
 
 //Contact Repository interface for all functions from the DAO

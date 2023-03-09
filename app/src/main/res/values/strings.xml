@@ -4,7 +4,7 @@
     <string name="edit">Edit</string>
     <string name="about">About</string>
 
-    <string name="about_text">This application is a Contacts database.</string>
+    <string name="about_text">This application is a contacts database.\n\nDeveloped by Libby Lewis for JHU Course EN.605.686.81.SP23</string>
 
     <string name="screen_title_contacts">Contacts</string>
     <string name="section_title_addresses">Addresses</string>

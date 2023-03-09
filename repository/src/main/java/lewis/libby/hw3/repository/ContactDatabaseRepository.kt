@@ -1,5 +1,7 @@
 package lewis.libby.hw3.repository
 
+// Entire code was taken and adapted from the Movie example project
+
 import android.content.Context
 import lewis.libby.hw3.data.createDao
 import kotlinx.coroutines.flow.map

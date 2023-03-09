@@ -1,5 +1,7 @@
 package lewis.libby.hw3.screens
 
+// Entire code was taken and adapted from the Movie Ui example project
+
 import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

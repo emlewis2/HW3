@@ -1,5 +1,7 @@
 package lewis.libby.hw3.screens
 
+// Entire code taken and adapted from Movie Ui 2 example project
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState

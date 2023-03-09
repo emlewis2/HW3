@@ -1,5 +1,7 @@
 package lewis.libby.hw3.screens
 
+// List Scaffold function was taken from the Movie Ui 2 example project
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
