@@ -8,6 +8,7 @@ package lewis.libby.hw3.screens
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 //import androidx.compose.ui.Modifier
 //import androidx.compose.ui.res.stringResource
 //import androidx.compose.ui.unit.dp
@@ -28,6 +29,7 @@ fun ContactList(
     onToggleSelection: (String) -> Unit,
     onDeleteSelectedItems: () -> Unit,
     onContactClick: (String) -> Unit,
+    onAbout: () -> Unit,
     onAdd: () -> Unit,
 //    comparator: Comparator<ContactDto>,
 ) = ListScaffold(
@@ -43,9 +45,24 @@ fun ContactList(
     onClearSelections = onClearSelections,
     onToggleSelection = onToggleSelection,
     onDeleteSelectedItems = onDeleteSelectedItems,
-    onAdd = onAdd
-) { contact ->
-    SimpleText(text = "${contact.lastName}, ${contact.firstName}\n${contact.mobilePhone}")
+    onAdd = onAdd,
+    onAbout = onAbout
+) {
+    if (it.lastName == "" && it.firstName == "") {
+        SimpleText(text = "${stringResource(R.string.no_name)}\n${it.mobilePhone}")
+    } else if (it.lastName == "") {
+        SimpleText(text = "${stringResource(R.string.no_last_name)}, ${it.firstName}" +
+                "\n${it.mobilePhone}")
+    } else if (it.firstName == "") {
+        SimpleText(text = "${it.lastName}, ${stringResource(R.string.no_first_name)}" +
+                "\n${it.mobilePhone}")
+    } else {
+        SimpleText(text = "${it.lastName}, ${it.firstName}\n${it.mobilePhone}")
+    }
+//
+//    { contact ->
+//        SimpleText(text = "${contact.lastName}, ${contact.firstName}\n${contact.mobilePhone}")
+//    }
 }
 //) { paddingValues ->
 //    LazyColumn(

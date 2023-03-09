@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -33,19 +34,26 @@ import lewis.libby.hw3.components.TextEntry
 import lewis.libby.hw3.repository.ContactDto
 import lewis.libby.hw3.repository.ContactRepository
 import lewis.libby.hw3.components.SimpleText
+import lewis.libby.hw3.repository.AddressDto
 import lewis.libby.hw3.repository.ContactWithAddressesDto
 
 @Composable
 fun ContactEdit(
     contactId: String,
     fetchContact: suspend (String) -> ContactDto,
+    addresses: List<AddressDto>?,
+    setAddresses: (List<AddressDto>?) -> Unit,
     fetchContactWithAddresses: suspend (String) -> ContactWithAddressesDto,
+//    fetchAddresses: suspend (String) -> Set<AddressDto>,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
     onContactUpdate: (ContactDto) -> Unit,
     onAddressClick: (String) -> Unit,
-//    onDeleteAddress: (String) -> Unit,
+    onDeleteAddress: (String, String) -> Unit,
     onAddAddress: () -> Unit,
+    onAbout: () -> Unit,
+//    addresses: List<AddressDto>
+//    deletedAddress: Set<String>
 ) {
     var contact by remember { mutableStateOf<ContactDto?>(null) }
 
@@ -61,13 +69,22 @@ fun ContactEdit(
         contactWithAddressesDto = fetchContactWithAddresses(contactId)
     }
 
+//    var addresses by remember { mutableStateOf<List<AddressDto>?>(emptyList())}
+
+    var addressList = contactWithAddressesDto?.addresses
+
+    LaunchedEffect(key1 = addressList) {
+        setAddresses(addressList)
+    }
+
     ContactScaffold(
         title = contact?.firstName ?: stringResource(id = R.string.loading),
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
         onAddAddress = onAddAddress,
+        onAbout = onAbout,
 //        onAddressClick = onAddressClick
-//        onDeleteAddress = onDeleteAddress(addressId),
+//        onDeleteAddress = onDeleteAddress(),
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -142,7 +159,7 @@ fun ContactEdit(
                 //                        .clickable { onItemClick(getId(item)) }
             ) {
                 SimpleText(
-                    text = "Addresses",
+                    text = stringResource(id = R.string.section_title_addresses),
                     modifier = Modifier.weight(1f)
                 )
                 IconButton(
@@ -158,7 +175,7 @@ fun ContactEdit(
                     )
                 }
             }
-            contactWithAddressesDto?.addresses?.forEach { address ->
+            addressList?.forEach { address ->
                 Card(
                     elevation = 4.dp,
                     backgroundColor = MaterialTheme.colors.surface,
@@ -186,7 +203,12 @@ fun ContactEdit(
                                 modifier = Modifier.weight(1f)
                             )
                             IconButton(
-                                onClick = onAddAddress, // FIX FUNCTIONALITY
+                                onClick = {
+//                                    deletedAddress.plus(address.id)
+                                    onDeleteAddress(contactId, address.id)
+                                    addressList?.minus(address)
+                                    setAddresses(addressList)
+                                          }, // FIX FUNCTIONALITY
                                 modifier = Modifier
                                     .size(48.dp)
                             ) {

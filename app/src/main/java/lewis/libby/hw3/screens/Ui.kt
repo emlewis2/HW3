@@ -31,6 +31,7 @@ fun Ui(
             contacts = contacts,
             onSelectListScreen = viewModel::setScreenStack,
             onResetDatabase = viewModel::resetDatabase,
+            onAbout = { viewModel.pushScreen(About) },
             onContactClick = { id ->
                 viewModel.pushScreen(ContactDisplay(id))
             },
@@ -60,9 +61,10 @@ fun Ui(
             },
             onSelectListScreen = viewModel::setScreenStack,
             onResetDatabase = viewModel::resetDatabase,
-            onContactClick = { id ->
-                viewModel.pushScreen(AddressDisplay(id))
-            },
+            onAbout = { viewModel.pushScreen(About) },
+//            onContactClick = { id ->
+//                viewModel.pushScreen(AddressDisplay(id))
+//            },
             onEdit = { id ->
                 viewModel.pushScreen(ContactEdit(id))
             },
@@ -84,32 +86,39 @@ fun Ui(
             contactId = screen.id,
             fetchContact = viewModel::getContact,
             fetchContactWithAddresses = viewModel::getContactWithAddresses,
+            addresses = viewModel.addresses,
+            setAddresses = viewModel::settingAddresses,
+//            fetchAddresses = viewModel::getAddresses,
             onSelectListScreen = viewModel::setScreenStack,
             onResetDatabase = viewModel::resetDatabase,
             onAddressClick = { id -> viewModel.pushScreen(AddressEdit(id)) },
             onContactUpdate = viewModel::updateContact,
-//            onDeleteAddress = viewModel::deleteAddress,
+            onDeleteAddress = viewModel::deleteAddress,
+//            deletedAddress = viewModel.deletedAddress,
             onAddAddress = {
                 val newAddressId = UUID.randomUUID().toString()
                 viewModel.addAddress(screen.id, newAddressId)
                 viewModel.pushScreen(AddressEdit(newAddressId))
-            }
+            },
+            onAbout = { viewModel.pushScreen(About) }
         )
-        is AddressDisplay -> AddressDisplay(
-            addressId = screen.id,
-            fetchAddress = viewModel::getAddress,
-            onSelectListScreen = viewModel::setScreenStack,
-            onResetDatabase = viewModel::resetDatabase,
-//            onAddressClick = { id ->
-//                viewModel.pushScreen(AddressDisplay(id))
-//            }
-        )
+//        is AddressDisplay -> AddressDisplay(
+//            addressId = screen.id,
+//            fetchAddress = viewModel::getAddress,
+//            onSelectListScreen = viewModel::setScreenStack,
+//            onResetDatabase = viewModel::resetDatabase,
+////            onAddressClick = { id ->
+////                viewModel.pushScreen(AddressDisplay(id))
+////            }
+//        )
         is AddressEdit -> AddressEdit(
             addressId = screen.id,
             fetchAddress = viewModel::getAddress,
             onSelectListScreen = viewModel::setScreenStack,
             onResetDatabase = viewModel::resetDatabase,
-            onAddressUpdate = viewModel::updateAddress
+            onAddressUpdate = viewModel::updateAddress,
+            onAbout = { viewModel.pushScreen(About) }
         )
+        is About -> About()
     }
 }

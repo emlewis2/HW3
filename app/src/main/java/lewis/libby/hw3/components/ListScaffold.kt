@@ -37,6 +37,7 @@ fun <T> ListScaffold(
     getId: (T) -> String,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
+    onAbout: () -> Unit,
     onItemClick: (String) -> Unit,
     itemIcon: ImageVector,
     @StringRes itemIconContentDescriptionId: Int,
@@ -51,7 +52,8 @@ fun <T> ListScaffold(
         onResetDatabase = onResetDatabase,
         onDeleteSelectedItems = onDeleteSelectedItems,
         onClearSelections = onClearSelections,
-        onAdd = onAdd
+        onAdd = onAdd,
+        onAbout = onAbout
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -69,7 +71,8 @@ fun <T> ListScaffold(
     onResetDatabase = onResetDatabase,
     onDeleteSelectedItems = onDeleteSelectedItems,
     onClearSelections = onClearSelections,
-    onAdd = onAdd
+    onAdd = onAdd,
+    onAbout = onAbout
     ) { paddingValues ->
         LazyColumn(
             modifier = Modifier

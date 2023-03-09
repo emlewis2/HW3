@@ -41,6 +41,7 @@ fun AddressEdit(
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
     onAddressUpdate: (AddressDto) -> Unit,
+    onAbout: () -> Unit,
 //    onDeleteAddress: (String) -> Unit,
 //    onAddAddress: () -> Unit,
 ) {
@@ -55,6 +56,7 @@ fun AddressEdit(
         title = address?.type ?: stringResource(id = R.string.loading),
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
+        onAbout = onAbout
 //        onAddAddress = onAddAddress
 //        onDeleteAddress = onDeleteAddress(addressId),
     ) { paddingValues ->

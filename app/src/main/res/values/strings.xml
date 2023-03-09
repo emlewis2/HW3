@@ -2,10 +2,17 @@
     <string name="app_name">HW3</string>
     <string name="reset_database">Reset Database</string>
     <string name="edit">Edit</string>
+    <string name="about">About</string>
+
+    <string name="about_text">This application is a Contacts database.</string>
 
     <string name="screen_title_contacts">Contacts</string>
+    <string name="section_title_addresses">Addresses</string>
 
     <string name="no_contacts_found">No Contacts Found</string>
+    <string name="no_name">&lt;No Name\></string>
+    <string name="no_last_name">No Last Name</string>
+    <string name="no_first_name">No First Name</string>
 
     <string name="tap_to_toggle_selection">Tap to toggle selection</string>
     <string name="clear_selections">Clear selections</string>
@@ -13,6 +20,8 @@
     <string name="add_contact">Add contact</string>
     <string name="delete_address">Delete address</string>
     <string name="add_address">Add address</string>
+
+    <string name="name">Name</string>
 
     <string name="first_name">First Name</string>
     <string name="first_name_placeholder">Enter the first name</string>

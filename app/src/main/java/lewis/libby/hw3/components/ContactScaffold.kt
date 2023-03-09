@@ -37,9 +37,10 @@ fun ContactScaffold(
     onClearSelections: () -> Unit = {},
     onDeleteSelectedItems: () -> Unit = {},
     onSelectListScreen: (Screen) -> Unit,
-    onResetDatabase: () -> Unit,
+    onResetDatabase: (() -> Unit)? = null,
     onEdit: (() -> Unit)? = null,
     onAdd: (() -> Unit)? = null,
+    onAbout: (() -> Unit)? = null,
     onDeleteAddress: () -> Unit = {},
     onAddAddress: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
@@ -47,7 +48,7 @@ fun ContactScaffold(
     Scaffold(
         topBar = {
             val displayName = if (title == "") {
-                "<No Name>"
+                stringResource(id = R.string.no_name)
             } else {
                 title
             }
@@ -78,14 +79,27 @@ fun ContactScaffold(
                                 )
                             }
                         }
-                        IconButton(
-                            onClick = onResetDatabase,
-                            modifier = Modifier.padding(8.dp),
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Autorenew,
-                                contentDescription = stringResource(id = R.string.reset_database)
-                            )
+                        onResetDatabase?.let { onResetDatabase ->
+                            IconButton(
+                                onClick = onResetDatabase,
+                                modifier = Modifier.padding(8.dp),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Autorenew,
+                                    contentDescription = stringResource(id = R.string.reset_database)
+                                )
+                            }
+                        }
+                        onAbout?.let { onAbout ->
+                            IconButton(
+                                onClick = onAbout,
+                                modifier = Modifier.padding(8.dp),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.QuestionMark,
+                                    contentDescription = stringResource(id = R.string.about)
+                                )
+                            }
                         }
 //                        ScreenSelectButton(
 //                            targetScreen = ContactList,

@@ -18,13 +18,13 @@ import java.util.*
 
 sealed interface Screen             //Sealed interface
 object ContactList: Screen          //Screen for all contacts
-//object AddressList: Screen          //Screen for all addresses
+object About: Screen          //Screen for about page
 data class ContactDisplay(           //Screen for individual contact
     val id: String
 ): Screen
-data class AddressDisplay(           //Screen for individual address
-    val id: String
-): Screen
+//data class AddressDisplay(           //Screen for individual address
+//    val id: String
+//): Screen
 data class ContactEdit(
     val id: String
 ): Screen
@@ -49,9 +49,20 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
     var selectedItemIds by mutableStateOf<Set<String>>(emptySet())
         private set
 
+    var addresses by mutableStateOf<List<AddressDto>?>(emptyList())
+        private set
+
+    fun settingAddresses(addressList: List<AddressDto>?) {
+        addresses = addressList
+    }
+
     fun clearSelections() {
         selectedItemIds = emptySet()
     }
+
+//    fun clearAddress() {
+//        deletedAddress = emptySet()
+//    }
     fun toggleSelection(id: String) {
         selectedItemIds =
             if (id in selectedItemIds) {
@@ -130,10 +141,16 @@ class ContactViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteAddress(addressId: String) {
+    fun deleteAddress(contactId: String, addressId: String) {
         viewModelScope.launch {
             repository.deleteAddressById(addressId)
+//            delay(5000)
+//            pushScreen(ContactEdit(contactId))
+//            popScreen()
+//            clearAddress()
+//            addresses - addressId
         }
+//        pushScreen(ContactEdit(contactId))
     }
 
     fun addAddress(contactId: String, newAddressId: String) {

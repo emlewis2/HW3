@@ -29,9 +29,10 @@ fun ContactDisplay(
     fetchContactWithAddresses: suspend (String) -> ContactWithAddressesDto,
     onSelectListScreen: (Screen) -> Unit,
     onResetDatabase: () -> Unit,
-    onContactClick: (String) -> Unit,
+//    onContactClick: (String) -> Unit,
     onEdit: (String) -> Unit,
     onAdd: (String) -> Unit,
+    onAbout: () -> Unit,
 //    onAdd: (() -> Unit)? = null,
     ) {
     var contactWithAddressesDto by remember { mutableStateOf<ContactWithAddressesDto?>(null) }
@@ -47,6 +48,7 @@ fun ContactDisplay(
         title = contactWithAddressesDto?.contact?.firstName ?: stringResource(id = R.string.loading),
         onSelectListScreen = onSelectListScreen,
         onResetDatabase = onResetDatabase,
+        onAbout = onAbout,
         onEdit =
         contactWithAddressesDto?.let { contactWithAddresses ->
             {
@@ -64,21 +66,30 @@ fun ContactDisplay(
         ) {
             contactWithAddressesDto?.let { contactWithAddresses ->
                 Row {
-                    SimpleText(text = "Name: ${contactWithAddresses.contact.firstName} " +
+                    SimpleText(text = "${stringResource(id = R.string.name)}: " +
+                            "${contactWithAddresses.contact.firstName} " +
                             contactWithAddresses.contact.lastName
                     )
                 }
                 Row {
-                    SimpleText("Home Phone: ${contactWithAddresses.contact.homePhone}")
+                    SimpleText("${stringResource(id = R.string.home_phone)}: " +
+                            contactWithAddresses.contact.homePhone
+                    )
                 }
                 Row {
-                    SimpleText(text = "Work Phone: ${contactWithAddresses.contact.workPhone}")
+                    SimpleText(text = "${stringResource(id = R.string.work_phone)}: " +
+                            contactWithAddresses.contact.workPhone
+                    )
                 }
                 Row {
-                    SimpleText(text = "Mobile Phone: ${contactWithAddresses.contact.mobilePhone}")
+                    SimpleText(text = "${stringResource(id = R.string.mobile_phone)}: " +
+                            contactWithAddresses.contact.mobilePhone
+                    )
                 }
                 Row {
-                    SimpleText(text = "Email: ${contactWithAddresses.contact.email}")
+                    SimpleText(text = "${stringResource(id = R.string.email)}: " +
+                            contactWithAddresses.contact.email
+                    )
                 }
                 //Display each address for the specific contact
                 contactWithAddresses.addresses.forEach { address ->
