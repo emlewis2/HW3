@@ -188,10 +188,15 @@ fun ContactEdit(
                             )
                             IconButton(
                                 onClick = {
+                                    /* Currently deleting address but not updating the screen
+                                     * Backing out or going to next screen and coming back to
+                                     * ContactEdit screen will update the screen with the deleted
+                                     * address card removed
+                                    */
                                     onDeleteAddress(address.id)
                                     addressList?.minus(address)
                                     setAddresses(addressList)
-                                          }, // FIX FUNCTIONALITY
+                                          },
                                 modifier = Modifier
                                     .size(48.dp)
                             ) {

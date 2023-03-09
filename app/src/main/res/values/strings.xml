@@ -47,14 +47,14 @@
     <string name="street">Street</string>
     <string name="street_placeholder">Enter the street</string>
 
-    <string name="city">Street</string>
-    <string name="city_placeholder">Enter the street</string>
+    <string name="city">City</string>
+    <string name="city_placeholder">Enter the city</string>
 
-    <string name="state">Street</string>
-    <string name="state_placeholder">Enter the street</string>
+    <string name="state">State</string>
+    <string name="state_placeholder">Enter the state</string>
 
-    <string name="zip">Street</string>
-    <string name="zip_placeholder">Enter the street</string>
+    <string name="zip">Zip</string>
+    <string name="zip_placeholder">Enter the zip</string>
 
     <string name="loading">Loading</string>
 </resources>
